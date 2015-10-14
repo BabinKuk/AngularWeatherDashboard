@@ -1,0 +1,37 @@
+﻿<div class="row">
+    <h4>Weather Forecast for {{forecast.city.name}},  {{forecast.city.country}}</h4>
+    <div class="col-md-4 forecast-list">
+        <table class="table">
+            <tbody>
+                <!--loop through forecast list, details in console: object->list array(7) -->
+                <tr ng-repeat="weather in forecast.list">
+                    <td>{{getTime(weather.dt) | date: "dd MMM"}}
+                        <!-- use encapsulated function img src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png"-->
+                        <img ng-src="{{getWeatherImgUrl(weather.weather[0].icon)}}">
+                    </td>
+                    <td>
+                        <!-- use encapsulated function span class="label label-warning">{{weather.temp.max-273.15 | number}}°C</span>&nbsp;
+                        <span class="label label-default">{{weather.temp.min-273.15 | number}}°C</span--> 
+                        <span class="label label-warning">{{kelvinToDegree(weather.temp.max) | number}}°C</span>&nbsp;
+                        <span class="label label-default">{{kelvinToDegree(weather.temp.min) | number}}°C</span> 
+                        &nbsp;&nbsp;
+                        <i>{{weather.weather[0].description}}</i>
+                        <p>
+                            {{weather.speed}} m/s <br>
+                            clouds: {{weather.clouds}}%, {{weather.pressure}} hpa
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--highcharts-->
+    <div class="col-md-8">
+        <!--custom directive, dp data provider, -->
+        <babin-kuk-forecast dp="forecast"></babin-kuk-forecast>
+    </div>
+</div>
+<div class="row weather-controls">
+    <a href="#/search" class="btn btn-info">Back to Search</a>
+    <a href="#/weather/{{forecast.id}}" class="btn btn-info">Back to Deatils</a>
+</div>

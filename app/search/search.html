@@ -1,0 +1,35 @@
+﻿<div class="row">
+    <div class="col-md-12 search">
+        <!--custom directive-->
+        <babin-kuk-search-box></babin-kuk-search-box>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 cities">
+        <table class="table">
+            <tbody>
+                <!--loop through cities from find function-->
+                <tr ng-repeat="city in cities">
+                    <td>
+                        <!-- use encapsulated function img src="http://openweathermap.org/img/w/{{city.weather[0].icon}}.png"-->
+                        <img ng-src="{{getWeatherImgUrl(city.weather[0].icon)}}">
+                    </td>
+                    <td>
+                        <b><a href="#/weather/{{city.id}}">{{city.name}}, {{city.sys.country}}</a></b>
+                        <!-- use encapsulated function img src="http://openweathermap.org/images/flags/{{city.sys.country.toLowerCase()}}.png"-->
+                        <img ng-src="{{getCountryFlagImgUrl(city.sys.country)}}">
+                        <b><i>{{city.weather[0].description}}</i></b>
+                        <p>  <span class="badge badge-info">{{kelvinToDegree(city.main.temp) | number}}°C </span> 
+                            <!--use encapsulated function Temperature from {{city.main.temp_min-273.15 | number}} to {{city.main.temp_max-273.15 | number}}°C, Wind {{city.wind.speed}}m/s. Clouds {{city.clouds.all}}%, {{city.main.pressure}} hpa</p>-->
+                            Temperature from {{kelvinToDegree(city.main.temp_min) | number}} to {{kelvinToDegree(city.main.temp_max) | number}}°C, Wind {{city.wind.speed}}m/s. Clouds {{city.clouds.all}}%, {{city.main.pressure}} hpa</p>>
+
+                        <p>
+                            Geo coords
+                            <a href="#/weather/{{city.id}}">[ {{city.coord.lon}}, {{city.coord.lat}} ]</a>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
